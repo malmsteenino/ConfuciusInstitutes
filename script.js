@@ -1,37 +1,28 @@
-// Funzione per caricare le mappe dal dropdown in base alla selezione
+// Funzione per caricare le mappe nel dropdown
 function loadMapOptions() {
   const yearList = document.getElementById("yearList");
-  yearList.innerHTML = ""; // Resetta il contenuto del dropdown
+  yearList.innerHTML = ""; // Reset del dropdown
 
-  const selectedYearType = document.querySelector('input[name="yearType"]:checked').value;
+  const selectedMapType = document.querySelector('input[name="mapType"]:checked').value;
 
   let mapFiles = [];
 
-  if (selectedYearType === "single") {
-    // Aggiungi gli anni singoli (2004-2024) senza estensione .html
-    mapFiles = [
-      "2004", "2005", "2006", "2007", "2008",
-      "2009", "2010", "2011", "2012", "2013",
-      "2014", "2015", "2016", "2017", "2018",
-      "2019", "2020", "2021", "2022", "2023", "2024"
-    ];
-  } else if (selectedYearType === "range") {
-    // Aggiungi gli intervalli di anni (2004-2008, 2009-2012, ...)
-    mapFiles = [
-      "2004-2008", "2009-2013", "2014-2018", "2019-2024"
-    ];
-  } else if (selectedYearType === "china") {
-    // Aggiungi solo l'opzione per "china.html"
+  if (selectedMapType === "single") {
+    mapFiles = Array.from({ length: 21 }, (_, i) => (2004 + i).toString());
+  } else if (selectedMapType === "aperture") {
+    mapFiles = ["aperture_2004-2008", "aperture_2009-2013", "aperture_2014-2018", "aperture_2019-2024"];
+  } else if (selectedMapType === "chiusure") {
+    mapFiles = ["closure_2004-2008", "closure_2009-2013", "closure_2014-2018", "closure_2019-2024"];
+  } else if (selectedMapType === "china") {
     mapFiles = ["china"];
   }
 
-  // Popola il dropdown con le opzioni senza estensione .html
   mapFiles.forEach(file => {
     const listItem = document.createElement("li");
     const anchor = document.createElement("a");
     anchor.classList.add("dropdown-item");
     anchor.href = "#";
-    anchor.textContent = file === "china" ? "China" : file;
+    anchor.textContent = file;
     anchor.addEventListener("click", () => {
       updateMap(file);
     });
@@ -39,38 +30,24 @@ function loadMapOptions() {
     yearList.appendChild(listItem);
   });
 
-  // Imposta l'anno corrente nel dropdown
-  const currentYearText = document.getElementById("currentYear");
-  const firstOption = mapFiles[0]; // Prende il primo anno o intervallo
-  currentYearText.textContent = firstOption;
-  document.getElementById("yearDropdown").textContent = `Selected ${firstOption}`;
-
-  // Aggiorna la mappa con il primo valore
-  updateMap(firstOption);
+  // Imposta il primo valore come default
+  updateMap(mapFiles[0]);
 }
 
 // Funzione per aggiornare la mappa visualizzata
 function updateMap(file) {
   const mapViewer = document.getElementById("mapViewer");
-  const newSrc = `mappe/${file}.html`; // Aggiungi l'estensione .html al file selezionato
+  const newSrc = `mappe/${file}.html`; 
   mapViewer.src = newSrc;
-  console.log(`Caricamento mappa: ${newSrc}`);
-
-  // Aggiorna l'anno corrente visualizzato
-  const currentYearText = document.getElementById("currentYear");
-  currentYearText.textContent = file === "china" ? "China" : file;
-  document.getElementById("yearDropdown").textContent = `Selected ${file === "china" ? "China" : file}`;
+  document.getElementById("currentYear").textContent = file;
 }
 
-// Gestisci il cambio di tipo di selezione (singolo anno, intervallo o china)
-document.querySelectorAll('input[name="yearType"]').forEach(input => {
-  input.addEventListener("change", () => {
-    loadMapOptions(); // Ricarica le opzioni del dropdown
-  });
+// Gestisci il cambio di selezione dei radio button
+document.querySelectorAll('input[name="mapType"]').forEach(input => {
+  input.addEventListener("change", loadMapOptions);
 });
 
-// Carica le opzioni iniziali e la mappa predefinita
+// Caricamento iniziale della mappa
 window.onload = () => {
   loadMapOptions();
-  updateMap("2004"); // Imposta la mappa iniziale su 2004
 };
