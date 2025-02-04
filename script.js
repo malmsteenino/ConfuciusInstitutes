@@ -10,7 +10,7 @@ function loadMapOptions() {
   if (selectedMapType === "single") {
     mapFiles = Array.from({ length: 21 }, (_, i) => (2004 + i).toString());
   } else if (selectedMapType === "aperture") {
-    mapFiles = ["aperture_2004-2008", "aperture_2009-2013", "aperture_2014-2018", "aperture_2019-2024"];
+    mapFiles = ["openings_2004-2008", "openings_2009-2013", "openings_2014-2018", "openings_2019-2024"];
   } else if (selectedMapType === "chiusure") {
     mapFiles = ["closure_2004-2008", "closure_2009-2013", "closure_2014-2018", "closure_2019-2024"];
   } else if (selectedMapType === "china") {
