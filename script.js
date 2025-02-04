@@ -6,7 +6,7 @@ function loadMapOptions() {
   const selectedMapType = document.querySelector('input[name="mapType"]:checked').value;
 
   let mapFiles = [];
-
+//modifiche ai nomi dei file non sono passate?
   if (selectedMapType === "single") {
     mapFiles = Array.from({ length: 21 }, (_, i) => (2004 + i).toString());
   } else if (selectedMapType === "aperture") {
