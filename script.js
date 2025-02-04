@@ -12,7 +12,7 @@ function loadMapOptions() {
   } else if (selectedMapType === "aperture") {
     mapFiles = ["openings_2004-2008", "openings_2009-2013", "openings_2014-2018", "openings_2019-2024"];
   } else if (selectedMapType === "chiusure") {
-    mapFiles = ["closure_2004-2008", "closure_2009-2013", "closure_2014-2018", "closure_2019-2024"];
+    mapFiles = ["closures_2004-2008", "closures_2009-2013", "closures_2014-2018", "closures_2019-2024"];
   } else if (selectedMapType === "china") {
     mapFiles = ["china"];
   }
